@@ -14,7 +14,6 @@
         .btn { display: inline-block; background: #e74c3c; color: white; padding: 15px 30px; text-align: center; font-size: 18px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 15px; border: none; cursor: pointer; width: 100%; box-sizing: border-box; }
         .btn:hover { background: #c0392b; }
         input[type="text"], input[type="tel"] { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px; }
-        .success-message { color: green; font-weight: bold; margin-top: 15px; display: none; }
     </style>
 </head>
 <body>
@@ -34,59 +33,30 @@
         
         <p><strong>Результаты моих клиентов поражают:</strong> в среднем уходит от 4 до 7 кг чистого жира за первые 10 дней! Без обвисшей кожи и чувства голода.</p>
 
-        <!-- ФОРМА ЗАКАЗА ДЛЯ LEADVERTEX -->
+        <!-- ОФИЦИАЛЬНАЯ ФОРМА LEADVERTEX -->
         <div class="cta-box">
             <h3>Акция! Получите консультацию и скидку на курс похудения</h3>
             <p>Оставьте ваши контакты ниже. Наш специалист свяжется с вами в течение 10 минут и подберет индивидуальную программу.</p>
             
-            <form id="orderForm">
-                <input type="text" id="name" name="name" placeholder="Введите ваше имя" required>
-                <input type="tel" id="phone" name="phone" placeholder="Введите ваш телефон" required>
-                <button type="submit" class="btn" id="submitBtn">ПОЛУЧИТЬ СКИДКУ</button>
-                <div id="msg" class="success-message">Заявка успешно отправлена! Ожидайте звонка специалиста.</div>
+            <form action="https://leadvertex.info" method="POST">
+                <!-- Скрытые технические данные вашего демо-проекта -->
+                <input type="hidden" name="goods[]" value="1"> 
+                <input type="hidden" name="utm_source" value="kadam">
+                <input type="hidden" name="additional1" id="site_id" value="">
+                <input type="hidden" name="additional2" id="click_id" value="">
+
+                <input type="text" name="fio" placeholder="Введите ваше имя" required>
+                <input type="tel" name="phone" placeholder="Введите ваш телефон" required>
+                <button type="submit" class="btn">ПОЛУЧИТЬ СКИДКУ</button>
             </form>
         </div>
     </div>
 
     <script>
-        document.getElementById('orderForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submitBtn');
-            const msgDiv = document.getElementById('msg');
-            
-            // Собираем метки из ссылки для Kadam
-            const urlParams = new URLSearchParams(window.location.search);
-            const siteId = urlParams.get('site_id') || '';
-            const clickId = urlParams.get('click_id') || '';
-
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            
-            submitBtn.disabled = true;
-            submitBtn.innerText = 'ОТПРАВКА...';
-
-            // Автоматическая отправка лида в ваш LeadVertex через безопасный шлюз
-            fetch('https://formspree.io', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    project_id: '43152',
-                    name: name,
-                    phone: phone,
-                    utm_source: 'kadam',
-                    site_id: siteId,
-                    click_id: clickId
-                })
-            }).then(response => {
-                submitBtn.style.display = 'none';
-                msgDiv.style.display = 'block';
-            }).catch(error => {
-                alert('Ошибка отправки. Попробуйте еще раз.');
-                submitBtn.disabled = false;
-                submitBtn.innerText = 'ПОЛУЧИТЬ СКИДКУ';
-            });
-        });
+        // Скрипт автоматически вытаскивает метки Kadam из ссылки и привязывает к заявке
+        const urlParams = new URLSearchParams(window.location.search);
+        document.getElementById('site_id').value = urlParams.get('site_id') || '';
+        document.getElementById('click_id').value = urlParams.get('click_id') || '';
     </script>
 
 </body>
