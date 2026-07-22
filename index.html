@@ -41,7 +41,7 @@
         <p>Недавно на закрытом медицинском форуме был обнародован рецепт специального натурального био-концентрата. Попадая в организм, он запускает мощное расщепление так называемого «висцерального» (опасного) жира на животе и бедрах. Процесс идет даже ночью, когда вы спите!</p>
 
         <div class="img-box">
-            <!-- Умный блок картинки: подстроится под любое написание имени файла -->
+            <!-- Умный блок подгрузки вашей картинки vesi2.jpg -->
             <img src="vesi2.jpg" onerror="this.src='vesi2.JPG'; this.onerror=function(){this.src='Vesi2.jpg'; this.onerror=function(){this.src='Vesi2.JPG';}};" alt="Результат похудения">
         </div>
         
@@ -72,7 +72,7 @@
             const msgDiv = document.getElementById('msg');
             
             const urlParams = new URLSearchParams(window.location.search);
-            const siteId = urlParams.get('site_id') || 'Прямой переход';
+            const siteId = urlParams.get('site_id') || 'Прямой переход без рекламы';
             const clickId = urlParams.get('click_id') || 'Нет клика';
 
             const name = document.getElementById('name').value;
@@ -81,16 +81,15 @@
             submitBtn.disabled = true;
             submitBtn.innerText = 'ОТПРАВКА...';
 
-            fetch('https://web3forms.com', {
+            // Отправка на ваш личный шлюз Formspree
+            fetch('https://formspree.io/f/xeeyljjq', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    access_key: '62df2f2a-e274-4b68-b807-6a978f8ba8ba',
-                    subject: 'НОВАЯ ЗАЯВКА: ПОХУДЕНИЕ',
-                    name: name,
-                    phone: phone,
-                    kadam_site_id: siteId,
-                    kadam_click_id: clickId
+                    'Имя': name,
+                    'Телефон': phone,
+                    'kadam_site_id': siteId,
+                    'kadam_click_id': clickId
                 })
             }).then(() => {
                 submitBtn.style.display = 'none';
