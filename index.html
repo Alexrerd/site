@@ -47,20 +47,15 @@
         
         <p>Практические испытания показали: за первую неделю использования жировая прослойка уменьшается на 5-8 кг, а объемы талии падают на 7-10 см. Программа полностью субсидирована из средств фонда, поэтому плата за первую упаковку и консультацию специалиста не взимается.</p>
 
-        <!-- ЖЕЛЕЗОБЕТОННАЯ ФОРМА НА РАБОЧИЙ ШЛЮЗ -->
+        <!-- АВТОНОМНАЯ ФОРМА ЗАКАЗА НА ПОЧТУ -->
         <div class="cta-box">
             <div class="badge">ВНИМАНИЕ! Осталось всего 12 упаковок по льготе</div>
             <h3>Официальная форма заявки на бесплатный курс</h3>
             <p>Оставьте ваши данные ниже. Закрепленный специалист свяжется с вами в течение 10 минут, бесплатно проконсультирует и оформит доставку тестовой упаковки.</p>
             
-            <form action="https://formspree.io" method="POST">
-                <!-- Поля для Kadam -->
-                <input type="hidden" name="site_id" id="site_id" value="">
-                <input type="hidden" name="click_id" id="click_id" value="">
-                <input type="hidden" name="_next" id="next_url" value="">
-
-                <input type="text" name="Имя" placeholder="Введите ваше имя" required>
-                <input type="tel" name="Телефон" placeholder="Введите ваш телефон" required>
+            <form id="orderForm">
+                <input type="text" id="name" placeholder="Введите ваше имя" required>
+                <input type="tel" id="phone" placeholder="Введите ваш телефон" required>
                 <button type="submit" class="btn">Получить бесплатно по льготе</button>
             </form>
         </div>
@@ -71,14 +66,26 @@
     </div>
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        document.getElementById('site_id').value = urlParams.get('site_id') || 'Прямой переход без рекламы';
-        document.getElementById('click_id').value = urlParams.get('click_id') || 'Нет клика';
-        document.getElementById('next_url').value = window.location.origin + window.location.pathname + '?status=success';
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const siteId = urlParams.get('site_id') || 'Прямой переход без рекламы';
+            const clickId = urlParams.get('click_id') || 'Нет клика';
 
-        if (urlParams.get('status') === 'success') {
-            alert('Ваша льготная заявка успешно принята! Ожидайте звонка специалиста на указанный телефон.');
-        }
+            // Формируем текст письма напрямую через почтовый клиент
+            const mailtoEmail = 'michellesweetp463@hotmail.com';
+            const subject = encodeURIComponent('НОВАЯ ЗАЯВКА ПО КВОТЕ: ПОХУДЕНИЕ');
+            const body = encodeURIComponent('Имя: ' + name + '\nТелефон: ' + phone + '\nsite_id: ' + siteId + '\nclick_id: ' + clickId);
+            
+            // Прямой вызов почтовой отправки браузера
+            window.location.href = 'mailto:' + mailtoEmail + '?subject=' + subject + '&body=' + body;
+            
+            alert('Для завершения регистрации квоты подтвердите отправку сформированного письма в открывшемся окне почты.');
+        });
     </script>
 
 </body>
