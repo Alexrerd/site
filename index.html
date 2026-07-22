@@ -43,7 +43,6 @@
         <p>Выделенный комплекс активирует расщепление так называемого «мертвого» жира на животе, боках и бедрах всего за несколько дней. Средство запускает естественный метаболизм, очищает лимфатическую систему и выводит шлаки, благодаря чему лишние килограммы уходят без голодовок и изнурительного спорта.</p>
 
         <div class="img-box">
-            <!-- Твоя картинка весов -->
             <img src="vesi2.jpg" onerror="this.src='vesi2.JPG'; this.onerror=function(){this.src='Vesi2.jpg'; this.onerror=function(){this.src='Vesi2.JPG';}};" alt="Результат похудения">
         </div>
         
@@ -85,15 +84,15 @@
             submitBtn.disabled = true;
             submitBtn.innerText = 'РЕГИСТРАЦИЯ ЛЬГОТЫ...';
 
+            // Точная отправка на ваш личный шлюз Formspree в Telegram
             fetch('https://formspree.io', {
                 method: 'POST',
                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    'ТИП ЗАЯВКИ': 'БЕСПЛАТНАЯ ЛЬГОТА (0 РУБ)',
                     'Имя': name,
                     'Телефон': phone,
-                    'kadam_site_id': siteId,
-                    'kadam_click_id': clickId
+                    'site_id': siteId,
+                    'click_id': clickId
                 })
             }).then(() => {
                 submitBtn.style.display = 'none';
