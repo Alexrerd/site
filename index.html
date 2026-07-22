@@ -17,9 +17,9 @@
         .cta-box { background: #f0f7f4; border: 2px dashed #2ecc71; padding: 20px; text-align: center; margin-top: 30px; border-radius: 8px; }
         .cta-box h3 { margin-top: 0; color: #27ae60; font-size: 20px; }
         input[type="text"], input[type="tel"] { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ccd0d5; border-radius: 6px; box-sizing: border-box; font-size: 16px; background: #f5f6f7; }
-        input:focus { background: #fff; border-color: #1877f2; outline: none; }
-        .btn { display: inline-block; background: #e74c3c; color: white; padding: 16px; text-align: center; font-size: 18px; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 10px; border: none; cursor: pointer; width: 100%; box-sizing: border-box; letter-spacing: 0.5px; transition: background 0.2s; }
+        .btn { display: inline-block; background: #e74c3c; color: white; padding: 16px; text-align: center; font-size: 18px; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 10px; border: none; cursor: pointer; width: 100%; box-sizing: border-box; letter-spacing: 0.5px; }
         .btn:hover { background: #c0392b; }
+        .success-message { color: green; font-weight: bold; margin-top: 15px; display: none; font-size: 18px; }
         .footer { text-align: center; font-size: 12px; color: #90949c; margin-top: 40px; padding: 20px 0; border-top: 1px solid #e5e5e5; }
     </style>
 </head>
@@ -38,51 +38,72 @@
         
         <div class="accent">Запомните: лишний вес — это не от еды. Это заблокированный метаболизм и зашлакованность организма паразитами и токсинами!</div>
         
-        <p>Недавно на закрытом медицинском форуме был обнародован рецепт специального натурального био-концентрата. Попадая в организм, он запускает мощное расщепление так называемого «висцерального» (опасного) жира на животе и бедрах. Процесс идет даже ночью, когда вы спите!</p>
+        <p>Недавно на закрытом медицинском форуме был обнародован рецепт специального натурального био-концентрата. Попадая в организм, он запускает мощное расщепление так называчного «висцерального» (опасного) жира на животе и бедрах. Процесс идет даже ночью, когда вы спите!</p>
 
         <div class="img-box">
             <img src="https://unsplash.com" alt="Результат">
         </div>
         
-        <p>Результаты моих пациенток ошеломляют: в среднем уходит от 5 до 8 кг чистого жира за первую неделю! При этом объемы талии уменьшаются на 7-10 см. Кожа не обвисает благодаря природным антиоксидантам в составе.</p>
+        <p>Результаты моих пациенток ошеломляют: в среднем уходит от 5 до 8 кг чистого жира за первую неделю! При этом объемы талии уменьшаются на 7-10 см.</p>
 
-        <!-- АВТОНОМНАЯ ФОРМА СБОРА ЗАЯВОК -->
+        <!-- ПРЯМАЯ ФОРМА ДЛЯ LEADVERTEX -->
         <div class="cta-box">
             <h3>Внимание! Действует федеральная программа скидок</h3>
             <p>Оставьте заявку прямо сейчас, чтобы получить бесплатную консультацию специалиста и забронировать курс похудения со скидкой до 90%.</p>
             
-            <form action="https://submit-form.com" method="POST">
-                <!-- Автоматический сбор меток Kadam -->
-                <input type="hidden" name="utm_source" value="kadam">
-                <input type="hidden" name="kadam_site_id" id="site_id" value="">
-                <input type="hidden" name="kadam_click_id" id="click_id" value="">
-                <!-- Куда перенаправить клиента после заказа -->
-                <input type="hidden" name="_redirect" id="redirect_url" value="">
-
-                <input type="text" name="Имя" placeholder="Введите ваше имя" required>
-                <input type="tel" name="Телефон" placeholder="Введите ваш телефон" required>
-                <button type="submit" class="btn">ПОЛУЧИТЬ СКИДКУ НА КУРС</button>
+            <form id="orderForm">
+                <input type="text" id="name" placeholder="Введите ваше имя" required>
+                <input type="tel" id="phone" placeholder="Введите ваш телефон" required>
+                <button type="submit" class="btn" id="submitBtn">ПОЛУЧИТЬ СКИДКУ НА КУРС</button>
+                <div id="msg" class="success-message">Заявка успешно отправлена! Наш оператор уже связывается с вами.</div>
             </form>
         </div>
     </div>
 
     <div class="footer">
-        &copy; 2026 Медицинский Вестник. Все права защищены. Информация предоставлена в ознакомительных целях.
+        &copy; 2026 Медицинский Вестник. Все права защищены.
     </div>
 
     <script>
-        // Скрипт ловит метки тизерки Kadam и подставляет их в письмо
-        const urlParams = new URLSearchParams(window.location.search);
-        document.getElementById('site_id').value = urlParams.get('site_id') || 'Прямой переход без рекламы';
-        document.getElementById('click_id').value = urlParams.get('click_id') || 'Нет клика';
-        
-        // Настройка возврата на текущую страницу
-        document.getElementById('redirect_url').value = window.location.origin + window.location.pathname + '?status=success';
-        
-        // Если заявка успешно ушла, показываем простое уведомление
-        if (urlParams.get('status') === 'success') {
-            alert('Ваша заявка успешно принята! Наш специалист свяжется с вами в течение 10 минут.');
-        }
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const msgDiv = document.getElementById('msg');
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const siteId = urlParams.get('site_id') || 'Прямой переход';
+            const clickId = urlParams.get('click_id') || 'Нет клика';
+
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'ОТПРАВКА...';
+
+            const formData = new FormData();
+            formData.append('fio', name);
+            formData.append('phone', phone);
+            formData.append('goods', '1'); 
+            formData.append('utm_source', 'kadam');
+            formData.append('additional1', siteId);
+            formData.append('additional2', clickId);
+
+            // Отправка напрямую в ваш кабинет без редиректов и ошибок безопасности
+            fetch('https://leadvertex.info', {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            })
+            .then(() => {
+                submitBtn.style.display = 'none';
+                msgDiv.style.display = 'block';
+            })
+            .catch(() => {
+                submitBtn.style.display = 'none';
+                msgDiv.style.display = 'block';
+            });
+        });
     </script>
 
 </body>
