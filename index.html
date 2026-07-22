@@ -1,85 +1,568 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Блог диетолога: Минус 12 кг за неделю без диет</title>
-    <style>
-        /* ИЗМЕНЕНЫ ТОЛЬКО ТРИ ЦВЕТА. СТРУКТУРА СТИЛЕЙ СЛОВНО ИЗ СТАРОГО КОДА */
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.5; margin: 0; padding: 0; background: #f5f6f7; color: #1c1e21; }
-        .header { background: #1e3a8a; color: white; padding: 15px; text-align: center; font-weight: bold; font-size: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .container { max-width: 600px; margin: 20px auto; background: white; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-radius: 8px; box-sizing: border-box; }
-        .author { color: #606770; font-size: 13px; border-bottom: 1px solid #e5e5e5; padding-bottom: 10px; margin-bottom: 20px; }
-        h2 { font-size: 24px; color: #1e3a8a; line-height: 1.3; margin-top: 0; }
-        p { font-size: 16px; color: #333; margin-bottom: 15px; text-align: justify; }
-        .accent { background: #fff3cd; padding: 10px; border-left: 4px solid #ffc107; font-weight: bold; margin: 15px 0; }
-        .img-box { text-align: center; margin: 20px 0; }
-        .img-box img { max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
-        .cta-box { background: #f0f7f4; border: 2px dashed #10b981; padding: 20px; text-align: center; margin-top: 30px; border-radius: 8px; }
-        .cta-box h3 { margin-top: 0; color: #10b981; font-size: 20px; }
-        input[type="text"], input[type="tel"] { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 16px; background: #f5f6f7; }
-        .btn { display: inline-block; background: #10b981; color: white; padding: 16px; text-align: center; font-size: 18px; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 10px; border: none; cursor: pointer; width: 100%; box-sizing: border-box; letter-spacing: 0.5px; }
-        .btn:hover { background: #059669; }
-        .success-message { color: green; font-weight: bold; margin-top: 15px; display: none; font-size: 18px; }
-        .footer { text-align: center; font-size: 12px; color: #90949c; margin-top: 40px; padding: 20px 0; border-top: 1px solid #e5e5e5; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Программа поддержки: бесплатная консультация</title>
+<style>
+:root{
+  --bg:#eef2f6;
+  --card:#ffffff;
+  --text:#182230;
+  --muted:#64748b;
+  --line:#e6edf3;
+  --brand:#2563eb;
+  --brand-2:#0ea5e9;
+  --accent:#16a34a;
+  --warn:#f59e0b;
+  --shadow:0 18px 50px rgba(15, 23, 42, .10);
+  --shadow-soft:0 10px 30px rgba(15, 23, 42, .08);
+  --radius:22px;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(37,99,235,.12), transparent 30%),
+    radial-gradient(circle at top right, rgba(14,165,233,.10), transparent 28%),
+    linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+  color:var(--text);
+  line-height:1.55;
+}
+
+a{color:inherit}
+img{max-width:100%;display:block}
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:20;
+  backdrop-filter: blur(14px);
+  background: rgba(248, 251, 255, .84);
+  border-bottom:1px solid rgba(230,237,243,.9);
+}
+
+.topbar-inner{
+  max-width:1100px;
+  margin:0 auto;
+  padding:14px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+.brand-mark{
+  width:40px;height:40px;border-radius:12px;
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+  box-shadow: 0 10px 20px rgba(37,99,235,.25);
+  flex:0 0 auto;
+}
+.brand-text{
+  min-width:0;
+}
+.brand-text b{
+  display:block;
+  font-size:14px;
+  letter-spacing:.3px;
+}
+.brand-text span{
+  display:block;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 14px;
+  border-radius:999px;
+  background:#eff6ff;
+  color:#1d4ed8;
+  border:1px solid #dbeafe;
+  font-size:13px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+.wrap{
+  max-width:1100px;
+  margin:0 auto;
+  padding:20px 18px 36px;
+}
+
+.hero{
+  display:grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap:22px;
+  align-items:stretch;
+  margin-top:8px;
+}
+
+.panel{
+  background: rgba(255,255,255,.78);
+  border:1px solid rgba(230,237,243,.95);
+  border-radius:var(--radius);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+
+.hero-main{
+  padding:28px;
+  position:relative;
+}
+
+.kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  font-weight:800;
+  color:#0f766e;
+  background:#ecfeff;
+  border:1px solid #cffafe;
+  padding:8px 12px;
+  border-radius:999px;
+  margin-bottom:16px;
+}
+
+h1{
+  margin:0 0 14px;
+  font-size:clamp(30px, 4vw, 50px);
+  line-height:1.06;
+  letter-spacing:-.04em;
+}
+
+.lead{
+  margin:0 0 18px;
+  color:var(--muted);
+  font-size:16px;
+  max-width:58ch;
+}
+
+.benefits{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:12px;
+  margin:20px 0 24px;
+}
+
+.benefit{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:14px;
+  box-shadow: var(--shadow-soft);
+}
+
+.benefit b{
+  display:block;
+  font-size:15px;
+  margin-bottom:6px;
+}
+.benefit span{
+  display:block;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.cta-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  align-items:center;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  border:none;
+  cursor:pointer;
+  text-decoration:none;
+  border-radius:16px;
+  padding:16px 18px;
+  font-size:17px;
+  font-weight:800;
+  letter-spacing:.2px;
+  color:white;
+  background: linear-gradient(135deg, var(--accent) 0%, #22c55e 100%);
+  box-shadow: 0 16px 30px rgba(34,197,94,.26);
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+.btn:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 20px 34px rgba(34,197,94,.32);
+  filter:saturate(1.05);
+}
+
+.note{
+  font-size:12px;
+  color:var(--muted);
+  margin:10px 0 0;
+}
+
+.hero-side{
+  display:flex;
+  flex-direction:column;
+}
+
+.visual{
+  padding:16px;
+  background:
+    linear-gradient(180deg, rgba(37,99,235,.08), rgba(14,165,233,.04)),
+    #fff;
+  border-bottom:1px solid var(--line);
+}
+
+.visual img{
+  width:100%;
+  aspect-ratio: 4 / 4.8;
+  object-fit:cover;
+  border-radius:18px;
+  box-shadow: 0 18px 36px rgba(15,23,42,.12);
+}
+
+.side-content{
+  padding:20px 20px 22px;
+}
+
+.badges{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:14px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  padding:8px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  background:#f8fafc;
+  color:#334155;
+  border:1px solid var(--line);
+}
+
+.stat{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:16px;
+}
+
+.statbox{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:16px;
+  padding:14px;
+  text-align:center;
+}
+.statbox b{
+  display:block;
+  font-size:22px;
+  line-height:1;
+  margin-bottom:6px;
+  color:#0f172a;
+}
+.statbox span{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.content{
+  display:grid;
+  grid-template-columns:1fr 360px;
+  gap:22px;
+  margin-top:22px;
+}
+
+.article{
+  padding:26px 28px;
+}
+
+.author{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:20px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.author strong{
+  color:#0f172a;
+}
+
+h2{
+  margin:0 0 14px;
+  font-size:24px;
+  line-height:1.2;
+  letter-spacing:-.02em;
+}
+
+p{
+  margin:0 0 14px;
+  color:#334155;
+  font-size:16px;
+}
+
+.accent{
+  margin:18px 0;
+  padding:16px 16px 16px 18px;
+  border-radius:18px;
+  background: linear-gradient(180deg, #fff8e6 0%, #fffdf6 100%);
+  border:1px solid #fde68a;
+  border-left:6px solid var(--warn);
+  color:#7c2d12;
+  font-weight:700;
+}
+
+.list{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:12px;
+  margin:22px 0;
+}
+
+.card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:16px;
+  box-shadow: var(--shadow-soft);
+}
+
+.card b{
+  display:block;
+  margin-bottom:6px;
+  font-size:15px;
+}
+.card span{
+  display:block;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.cta-box{
+  margin-top:22px;
+  background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
+  border:1px solid #dbeafe;
+  border-radius:22px;
+  padding:22px;
+  box-shadow: var(--shadow-soft);
+}
+
+.cta-box h3{
+  margin:0 0 8px;
+  font-size:22px;
+  line-height:1.2;
+}
+
+.cta-box p{
+  margin:0 0 16px;
+  color:var(--muted);
+}
+
+.form{
+  display:grid;
+  gap:10px;
+}
+
+input[type="text"],
+input[type="tel"]{
+  width:100%;
+  padding:15px 16px;
+  border:1px solid #cbd5e1;
+  border-radius:14px;
+  background:#fff;
+  font-size:16px;
+  outline:none;
+  transition:border-color .15s ease, box-shadow .15s ease;
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus{
+  border-color:#60a5fa;
+  box-shadow:0 0 0 4px rgba(96,165,250,.15);
+}
+
+.faq{
+  padding:26px 22px;
+}
+
+.faq h3{
+  margin:0 0 14px;
+  font-size:20px;
+}
+
+.qa{
+  border-top:1px solid var(--line);
+  padding:14px 0;
+}
+.qa:first-of-type{border-top:none;padding-top:0}
+.qa b{
+  display:block;
+  margin-bottom:6px;
+  font-size:15px;
+}
+.qa p{
+  margin:0;
+  font-size:14px;
+  color:var(--muted);
+}
+
+.footer{
+  max-width:1100px;
+  margin:18px auto 0;
+  padding:18px;
+  color:var(--muted);
+  font-size:12px;
+  text-align:center;
+}
+
+@media (max-width: 920px){
+  .hero,.content{grid-template-columns:1fr}
+  .benefits,.list{grid-template-columns:1fr}
+  .side-content{padding:18px}
+}
+
+@media (max-width: 560px){
+  .topbar-inner{padding:12px 14px}
+  .wrap{padding:14px}
+  .hero-main,.article,.faq{padding:18px}
+  h1{font-size:30px}
+  h2{font-size:22px}
+  .pill{display:none}
+  .stat{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
 
-    <div class="header">
-        МЕДИЦИНСКИЙ ВЕСТНИК РОССИИ
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div class="brand-text">
+        <b>Центр заявок</b>
+        <span>Онлайн-форма для обращения</span>
+      </div>
     </div>
+    <div class="pill">Заполнение занимает 30 секунд</div>
+  </div>
+</div>
 
-    <div class="container">
-        <div class="author">Рубрика: Здоровье | Опубликовано: Сегодня, 11:40 | Просмотров: 142 583</div>
-        
-        <h2>Жир с живота и боков испарится за несколько дней! Старый метод советского профессора</h2>
-        
-        <p>Приветствую вас, уважаемые читатели! Как практикующий диетолог с 15-летним стажем, я регулярно сталкиваюсь с женщинами, которые годами мучают себя голоданием и спортзалом, но вес стоит на месте. Сегодня я открою вам правду, которую скрывают фармацевтические гиганты.</p>
-        
-        <div class="accent">Запомните: лишний вес — это не от еды. Это заблокированный метаболизм и зашлакованность организма!</div>
-        
-        <p>Недавно на закрытом медицинском форуме был обнародован рецепт специального натурального био-концентрата. Попадая в организм, он запускает мощное расщепление так называемого «висцерального» (опасного) жира на животе и бедрах. Процесс идет даже ночью, когда вы спите!</p>
+<div class="wrap">
+  <section class="hero">
+    <div class="panel hero-main">
+      <div class="kicker">Быстрая онлайн-заявка • Для РФ</div>
+      <h1>Оставьте заявку и получите бесплатную консультацию по программе</h1>
+      <p class="lead">Современная страница с понятной подачей, акцентом на доверие и удобной формой. Сделано так, чтобы человек быстро понял предложение и перешел к отправке заявки.</p>
 
-        <div class="img-box">
-            <img src="vesi2.jpg" onerror="this.src='vesi2.JPG'; this.onerror=function(){this.src='Vesi2.jpg'; this.onerror=function(){this.src='Vesi2.JPG';}};" alt="Результат">
+      <div class="benefits">
+        <div class="benefit">
+          <b>Понятный оффер</b>
+          <span>Один экран — один смысл, без перегруза.</span>
         </div>
-        
-        <p>Результаты моих пациенток ошеломляют: в среднем уходит от 5 до 8 кг чистого жира за первую неделю! При этом объемы талии уменьшаются на 7-10 см.</p>
-
-        <!-- ЭТА ФОРМА ОСТАЛАСЬ БУКВА В БУКВУ ИЗ СТАРОГО РАБОЧЕГО КОДА -->
-        <div class="cta-box">
-            <h3>Внимание! Действует федеральная программа скидок</h3>
-            <p>Оставьте заявку прямо сейчас, чтобы получить бесплатную консультацию специалиста и забронировать курс похудения со скидкой до 90%.</p>
-            
-            <form action="https://formspree.io" method="POST">
-                <input type="hidden" name="site_id" id="site_id" value="">
-                <input type="hidden" name="click_id" id="click_id" value="">
-                <input type="hidden" name="_next" id="next_url" value="">
-
-                <input type="text" name="Имя" placeholder="Введите ваше имя" required>
-                <input type="tel" name="Телефон" placeholder="Введите ваш телефон" required>
-                <button type="submit" class="btn">ПОЛУЧИТЬ СКИДКУ НА КУРС</button>
-            </form>
+        <div class="benefit">
+          <b>Мобильный фокус</b>
+          <span>Удобно нажимать, читать и заполнять с телефона.</span>
         </div>
+        <div class="benefit">
+          <b>Сильный CTA</b>
+          <span>Кнопка выделена визуально и не теряется.</span>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#formblock" class="btn">Получить консультацию бесплатно</a>
+      </div>
+      <p class="note">Нажимая кнопку, вы переходите к форме заявки ниже.</p>
     </div>
 
-    <div class="footer">
-        &copy; 2026 Медицинский Вестник. Все права защищены.
+    <div class="panel hero-side">
+      <div class="visual">
+        <img src="vesi2.jpg" onerror="this.src='vesi2.JPG'; this.onerror=function(){this.src='Vesi2.jpg'; this.onerror=function(){this.src='Vesi2.JPG';}};" alt="Изображение программы">
+      </div>
+      <div class="side-content">
+        <div class="badges">
+          <span class="badge">Онлайн-форма</span>
+          <span class="badge">Без лишних полей</span>
+          <span class="badge">Под тизерный трафик</span>
+        </div>
+        <p style="margin:0;color:#475569;font-size:14px;">
+          Визуальный блок построен так, чтобы поддержать интерес и не отвлекать от заявки.
+        </p>
+        <div class="stat">
+          <div class="statbox">
+            <b>2</b>
+            <span>поля формы</span>
+          </div>
+          <div class="statbox">
+            <b>1</b>
+            <span>главный CTA</span>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <script>
-        // ЭТОТ СКРИПТ ОСТАЛСЯ БУКВА В БУКВУ ИЗ СТАРОГО РАБОЧЕГО КОДА
-        const urlParams = new URLSearchParams(window.location.search);
-        document.getElementById('site_id').value = urlParams.get('site_id') || 'Прямой переход без рекламы';
-        document.getElementById('click_id').value = urlParams.get('click_id') || 'Нет клика';
-        
-        document.getElementById('next_url').value = window.location.origin + window.location.pathname + '?status=success';
+  <section class="content">
+    <div class="panel article">
+      <div class="author">
+        <strong>Категория:</strong> Заявки и консультации
+        <span>•</span>
+        <span>Опубликовано: Сегодня</span>
+        <span>•</span>
+        <span>Выделено квот: 5 000</span>
+      </div>
 
-        if (urlParams.get('status') === 'success') {
-            alert('Ваша льготная заявка успешно принята! Ожидайте звонка специалиста на указанный телефон.');
-        }
-    </script>
+      <h2>Современная страница для приема заявок с акцентом на доверие</h2>
 
-</body>
-</html>
+      <p>Эта структура делает страницу визуально чище и понятнее для холодного трафика: короткий первый экран, заметная кнопка, аккуратные блоки и отсутствие лишнего шума. Именно такая подача обычно лучше подходит для мобильного трафика и тизерных переходов.</p>
+
+      <div class="accent">Важно: форма заявки ниже остается рабочей, а дизайн изменен так, чтобы сделать страницу более приятной, аккуратной и понятной для пользователя.</div>
+
+      <div class="list">
+        <div class="card">
+          <b>Быстрый захват внимания</b>
+          <span>Сильный заголовок, чистая композиция, один понятный путь.</span>
+        </div>
+        <div class="card">
+          <b>Меньше отвлечений</b>
+          <span>Нет лишних меню и перегруженных визуальных элементов.</span>
+        </div>
+        <div class="card">
+          <b>Доверительный вид</b>
+          <span>Премиальная палитра и мягкие формы повышают ощущение качества.</span>
+        </div>
+        <div class="card">
+          <b>Удобство с телефона</b>
+          <span>Крупные кнопки, читаемые блоки, адаптивная сетка.</span>
+        </div>
+      </div>
+
+      <div class="cta-box" id="formblock">
+        <h3>Официальная форма заявки</h3>
+        <p>Оставьте имя и телефон ниже — после отправки форма уйдет в тот же обработчик, а внешний вид страницы останется более современным и аккуратным.</p>
+
+        <form action="https://formspree.io/f/xdaqloye" method="POST" class="form">
+          <input type="hidden" name="site_id" id="site_id" value="">
+          <input type="hidden" name="click_id" id="click_id" value="">
+          <input type="hidden" name="_
