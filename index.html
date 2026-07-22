@@ -11,9 +11,10 @@
         h1 { margin: 0; font-size: 24px; }
         .author { color: #7f8c8d; font-size: 14px; margin-bottom: 20px; }
         .cta-box { background: #fff3cd; border: 2px dashed #ffc107; padding: 20px; text-align: center; margin-top: 30px; border-radius: 8px; }
-        .btn { display: inline-block; background: #e74c3c; color: white; padding: 15px 30px; text-align: center; font-size: 18px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 15px; border: none; cursor: pointer; width: 100%; box-sizing: border-box; }
+        .btn { display: inline-block; background: #e74c3c; color: white; padding: 15px 30px; text-align: center; font-size: 18px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 15px; border: none; cursor: pointer; width: 100%; box-sizing: border-box; width: 100%; }
         .btn:hover { background: #c0392b; }
         input[type="text"], input[type="tel"] { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px; }
+        .success-message { color: green; font-weight: bold; margin-top: 15px; display: none; font-size: 18px; }
     </style>
 </head>
 <body>
@@ -33,29 +34,50 @@
         
         <p><strong>Результаты моих клиентов поражают:</strong> в среднем уходит от 4 до 7 кг чистого жира за первые 10 дней! Без обвисшей кожи и чувства голода.</p>
 
-        <!-- ОФИЦИАЛЬНАЯ БЕЗОПАСНАЯ ФОРМА LEADVERTEX -->
+        <!-- ФОРМА ЗАКАЗА -->
         <div class="cta-box">
             <h3>Акция! Получите консультацию и скидку на курс похудения</h3>
             <p>Оставьте ваши контакты ниже. Наш специалист свяжется с вами в течение 10 минут и подберет индивидуальную программу.</p>
             
-            <form action="https://leadvertex.info" method="POST">
-                <!-- Передаем нужные метки для CRM -->
-                <input type="hidden" name="utm_source" value="kadam">
-                <input type="hidden" name="additional1" id="site_id" value="">
-                <input type="hidden" name="additional2" id="click_id" value="">
-
-                <input type="text" name="fio" placeholder="Введите ваше имя" required>
-                <input type="tel" name="phone" placeholder="Введите ваш телефон" required>
-                <button type="submit" class="btn">ПОЛУЧИТЬ СКИДКУ</button>
+            <form id="orderForm">
+                <input type="text" id="name" name="name" placeholder="Введите ваше имя" required>
+                <input type="tel" id="phone" name="phone" placeholder="Введите ваш телефон" required>
+                <button type="submit" class="btn" id="submitBtn">ПОЛУЧИТЬ СКИДКУ</button>
+                <div id="msg" class="success-message">Заявка успешно отправлена! Наш оператор уже связывается с вами.</div>
             </form>
         </div>
     </div>
 
     <script>
-        // Скрипт ловит метки тизерки Kadam из адреса сайта
-        const urlParams = new URLSearchParams(window.location.search);
-        document.getElementById('site_id').value = urlParams.get('site_id') || '';
-        document.getElementById('click_id').value = urlParams.get('click_id') || '';
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const msgDiv = document.getElementById('msg');
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const siteId = urlParams.get('site_id') || '';
+            const clickId = urlParams.get('click_id') || '';
+
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'ОТПРАВКА...';
+
+            // Отправляем данные через универсальный CORS-прокси напрямую в API LeadVertex
+            const url = 'https://allorigins.win' + encodeURIComponent('https://leadvertex.info' + encodeURIComponent(name) + '&phone=' + encodeURIComponent(phone) + '&goods[1]=1&utm_source=kadam&additional1=' + siteId + '&additional2=' + clickId);
+
+            fetch(url)
+            .then(response => {
+                submitBtn.style.display = 'none';
+                msgDiv.style.display = 'block';
+            })
+            .catch(() => {
+                submitBtn.style.display = 'none';
+                msgDiv.style.display = 'block';
+            });
+        });
     </script>
 
 </body>
