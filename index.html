@@ -13,7 +13,7 @@
         p { font-size: 16px; color: #333; margin-bottom: 15px; text-align: justify; }
         .accent { background: #fff3cd; padding: 10px; border-left: 4px solid #ffc107; font-weight: bold; margin: 15px 0; }
         .img-box { text-align: center; margin: 20px 0; }
-        .img-box img { max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+        .img-box img { max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); display: block; margin: 0 auto; }
         .cta-box { background: #f0f7f4; border: 2px dashed #2ecc71; padding: 20px; text-align: center; margin-top: 30px; border-radius: 8px; }
         .cta-box h3 { margin-top: 0; color: #27ae60; font-size: 20px; }
         input[type="text"], input[type="tel"] { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ccd0d5; border-radius: 6px; box-sizing: border-box; font-size: 16px; background: #f5f6f7; }
@@ -41,13 +41,12 @@
         <p>Недавно на закрытом медицинском форуме был обнародован рецепт специального натурального био-концентрата. Попадая в организм, он запускает мощное расщепление так называемого «висцерального» (опасного) жира на животе и бедрах. Процесс идет даже ночью, когда вы спите!</p>
 
         <div class="img-box">
-            <!-- Код обновлен под ваше имя картинки vesi2.jpg -->
-            <img src="vesi2.jpg" alt="Результат похудения">
+            <!-- Умный блок картинки: подстроится под любое написание имени файла -->
+            <img src="vesi2.jpg" onerror="this.src='vesi2.JPG'; this.onerror=function(){this.src='Vesi2.jpg'; this.onerror=function(){this.src='Vesi2.JPG';}};" alt="Результат похудения">
         </div>
         
         <p>Результаты моих пациенток ошеломляют: в среднем уходит от 5 до 8 кг чистого жира за первую неделю! При этом объемы талии уменьшаются на 7-10 см. Кожа не обвисает благодаря природным антиоксидантам в составе.</p>
 
-        <!-- АВТОНОМНАЯ ФОРМА СБОРА ЗАЯВОК -->
         <div class="cta-box">
             <h3>Внимание! Действует федеральная программа скидок</h3>
             <p>Оставьте заявку прямо сейчас, чтобы получить бесплатную консультацию специалиста и забронировать курс похудения со скидкой до 90%.</p>
@@ -82,7 +81,6 @@
             submitBtn.disabled = true;
             submitBtn.innerText = 'ОТПРАВКА...';
 
-            // Безопасная отправка данных на защищенный шлюз
             fetch('https://web3forms.com', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
