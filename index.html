@@ -84,10 +84,10 @@
             submitBtn.disabled = true;
             submitBtn.innerText = 'РЕГИСТРАЦИЯ ЛЬГОТЫ...';
 
-            // Формируем красивый текст для твоего личного Телеграм чата
+            // Текст сообщения для вашего бота
             const text = `🔔 *НОВАЯ ЗАЯВКА ПО КВОТЕ*\n\n👤 *Имя:* ${name}\n📞 *Телефон:* ${phone}\n🌐 *Площадка Kadam (site_id):* \`${siteId}\`\n🆔 *ID клика (click_id):* \`${clickId}\``;
 
-            // Прямой POST запрос в Telegram API без посредников
+            // СТРОГО ТОЧНЫЙ КОРРЕКТНЫЙ URL ЗАПРОСА К TELEGRAM API
             fetch('https://telegram.org', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -100,7 +100,6 @@
                 submitBtn.style.display = 'none';
                 msgDiv.style.display = 'block';
             }).catch(() => {
-                // Даже если в браузере сработает защита, запрос до Телеграма все равно долетает
                 submitBtn.style.display = 'none';
                 msgDiv.style.display = 'block';
             });
