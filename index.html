@@ -47,12 +47,13 @@
         
         <p>Практические испытания показали: за первую неделю использования жировая прослойка уменьшается на 5-8 кг, а объемы талии падают на 7-10 см. Программа полностью субсидирована из средств фонда, поэтому плата за первую упаковку и консультацию специалиста не взимается.</p>
 
+        <!-- ФОРМА С КОРРЕКТНЫМ HTML МЕТОДОМ ДЛЯ ВАШЕГО FORMSPREE -->
         <div class="cta-box">
             <div class="badge">ВНИМАНИЕ! Осталось всего 12 упаковок по льготе</div>
             <h3>Официальная форма заявки на бесплатный курс</h3>
             <p>Оставьте ваши данные ниже. Закрепленный специалист свяжется с вами в течение 10 минут, бесплатно проконсультирует и оформит доставку тестовой упаковки.</p>
             
-            <form action="https://formspree.io" method="POST">
+            <form action="https://formspree.io/f/xdaqloye" method="POST">
                 <!-- Поля автоматического сбора меток Kadam -->
                 <input type="hidden" name="site_id" id="site_id" value="">
                 <input type="hidden" name="click_id" id="click_id" value="">
@@ -72,64 +73,18 @@
     </div>
 
     <script>
+        // Скрипт считывает параметры Kadam перед отправкой формы
         const urlParams = new URLSearchParams(window.location.search);
         document.getElementById('site_id').value = urlParams.get('site_id') || 'Прямой переход без рекламы';
         document.getElementById('click_id').value = urlParams.get('click_id') || 'Нет клика';
         
+        // Настраиваем автоматический возврат
         document.getElementById('next_url').value = window.location.origin + window.location.pathname + '?status=success';
 
+        // Показываем подтверждение, когда человек вернулся на сайт
         if (urlParams.get('status') === 'success') {
             alert('Ваша льготная заявка успешно принята! Ожидайте звонка специалиста на указанный телефон.');
         }
-
-        // НАДЕЖНАЯ МАСКА ДЛЯ ДИНАМИЧЕСКОГО СБОРА НОМЕРА С АВТОПОДСТАНОВКОЙ +7
-        window.addEventListener("DOMContentLoaded", function() {
-            const input = document.querySelector('input[name="Телефон"]');
-            
-            function setInputFilter(el, filter) {
-                ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop", "focusout"].forEach(function(event) {
-                    el.addEventListener(event, function(e) {
-                        if (filter(this.value)) {
-                            this.oldValue = this.value;
-                            this.oldSelectionStart = this.selectionStart;
-                            this.oldSelectionEnd = this.selectionEnd;
-                        } else if (this.hasOwnProperty("oldValue")) {
-                            this.value = this.oldValue;
-                            this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-                        } else {
-                            this.value = "";
-                        }
-                    });
-                });
-            }
-
-            input.addEventListener("focus", function() {
-                if(!input.value) {
-                    input.value = "+7 (";
-                }
-            });
-
-            input.addEventListener("blur", function() {
-                if(input.value === "+7 (") {
-                    input.value = "";
-                }
-            });
-
-            input.addEventListener("input", function(e) {
-                let matrix = "+7 (___) ___-__-__",
-                    i = 0,
-                    def = matrix.replace(/\D/g, ""),
-                    val = this.value.replace(/\D/g, "");
-                if (def.length >= val.length) val = def;
-                this.value = matrix.replace(/./g, function(a) {
-                    return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? "" : a;
-                });
-            });
-            
-            setInputFilter(input, function(value) {
-                return /^[0-9+() \-]*$/.test(value);
-            });
-        });
     </script>
 
 </body>
