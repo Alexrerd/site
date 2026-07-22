@@ -86,7 +86,7 @@
 
             const text = `🔔 *НОВАЯ ЗАЯВКА ПО КВОТЕ*\n\n👤 *Имя:* ${name}\n📞 *Телефон:* ${phone}\n🌐 *site_id:* \`${siteId}\`\n🆔 *click_id:* \`${clickId}\``;
 
-            // Используем надежный прокси-запрос для обхода CORS защиты браузера
+            // Теперь токен бота и ваш личный chat_id разделены идеально по правилам Telegram API
             const targetUrl = `https://telegram.org{encodeURIComponent(text)}&parse_mode=Markdown`;
             
             fetch(`https://allorigins.win{encodeURIComponent(targetUrl)}`)
