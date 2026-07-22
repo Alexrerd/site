@@ -21,6 +21,7 @@
         input[type="text"], input[type="tel"] { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ccd0d5; border-radius: 6px; box-sizing: border-box; font-size: 16px; background: #f5f6f7; }
         .btn { display: inline-block; background: #2ecc71; color: white; padding: 16px; text-align: center; font-size: 18px; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 10px; border: none; cursor: pointer; width: 100%; box-sizing: border-box; letter-spacing: 0.5px; text-transform: uppercase; box-shadow: 0 4px 15px rgba(46,204,113,0.4); }
         .btn:hover { background: #27ae60; }
+        .success-message { color: green; font-weight: bold; margin-top: 15px; display: none; font-size: 18px; }
         .footer { text-align: center; font-size: 12px; color: #90949c; margin-top: 40px; padding: 20px 0; border-top: 1px solid #e5e5e5; }
     </style>
 </head>
@@ -39,7 +40,7 @@
         
         <div class="accent">Внимание: Программа действует строго до конца текущей недели. Любая гражданка РФ может подать заявку и получить пошаговый курс и первую упаковку жиросжигающего средства абсолютно БЕСПЛАТНО (0 рублей).</div>
         
-        <p>Выделенный комплекс активирует расщепление так называемого «мертвого» жира на животе, боках и бедрах всего за несколько дней. Средство запускает естественный метаболизм, очищает лимфатическую систему и выводит шлаки, благодаря чему лишние килограммы уходят без голодовок и изнурительного спорта.</p>
+        <p>Выделенный комплекс активирует расщепление так называемого «мертвого» жира на живота, боках и бедрах всего за несколько дней. Средство запускает естественный метаболизм, очищает лимфатическую систему и выводит шлаки, благодаря чему лишние килограммы уходят без голодовок и изнурительного спорта.</p>
 
         <div class="img-box">
             <img src="vesi2.jpg" onerror="this.src='vesi2.JPG'; this.onerror=function(){this.src='Vesi2.jpg'; this.onerror=function(){this.src='Vesi2.JPG';}};" alt="Результат похудения">
@@ -47,7 +48,7 @@
         
         <p>Практические испытания показали: за первую неделю использования жировая прослойка уменьшается на 5-8 кг, а объемы талии падают на 7-10 см. Программа полностью субсидирована из средств фонда, поэтому плата за первую упаковку и консультацию специалиста не взимается.</p>
 
-        <!-- АВТОНОМНАЯ ФОРМА ЗАКАЗА НА ПОЧТУ -->
+        <!-- АВТОНОМНАЯ ФОРМА СБОРА ЗАЯВОК -->
         <div class="cta-box">
             <div class="badge">ВНИМАНИЕ! Осталось всего 12 упаковок по льготе</div>
             <h3>Официальная форма заявки на бесплатный курс</h3>
@@ -56,7 +57,8 @@
             <form id="orderForm">
                 <input type="text" id="name" placeholder="Введите ваше имя" required>
                 <input type="tel" id="phone" placeholder="Введите ваш телефон" required>
-                <button type="submit" class="btn">Получить бесплатно по льготе</button>
+                <button type="submit" class="btn" id="submitBtn">Получить бесплатно по льготе</button>
+                <div id="msg" class="success-message">Ваша льготная заявка успешно принята! Ожидайте звонка специалиста на указанный телефон.</div>
             </form>
         </div>
     </div>
@@ -69,22 +71,37 @@
         document.getElementById('orderForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
+            const submitBtn = document.getElementById('submitBtn');
+            const msgDiv = document.getElementById('msg');
             
             const urlParams = new URLSearchParams(window.location.search);
             const siteId = urlParams.get('site_id') || 'Прямой переход без рекламы';
             const clickId = urlParams.get('click_id') || 'Нет клика';
 
-            // Формируем текст письма напрямую через почтовый клиент
-            const mailtoEmail = 'michellesweetp463@hotmail.com';
-            const subject = encodeURIComponent('НОВАЯ ЗАЯВКА ПО КВОТЕ: ПОХУДЕНИЕ');
-            const body = encodeURIComponent('Имя: ' + name + '\nТелефон: ' + phone + '\nsite_id: ' + siteId + '\nclick_id: ' + clickId);
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
             
-            // Прямой вызов почтовой отправки браузера
-            window.location.href = 'mailto:' + mailtoEmail + '?subject=' + subject + '&body=' + body;
-            
-            alert('Для завершения регистрации квоты подтвердите отправку сформированного письма в открывшемся окне почты.');
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'РЕГИСТРАЦИЯ ЛЬГОТЫ...';
+
+            // Отправка напрямую на защищенный шлюз-пересыльщик
+            fetch('https://formspree.io', {
+                method: 'POST',
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    _to: '7761586522',
+                    'Имя': name,
+                    'Телефон': phone,
+                    'kadam_site_id': siteId,
+                    'kadam_click_id': clickId
+                })
+            }).then(() => {
+                submitBtn.style.display = 'none';
+                msgDiv.style.display = 'block';
+            }).catch(() => {
+                submitBtn.style.display = 'none';
+                msgDiv.style.display = 'block';
+            });
         });
     </script>
 
