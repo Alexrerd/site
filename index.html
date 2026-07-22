@@ -21,7 +21,6 @@
         input[type="text"], input[type="tel"] { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ccd0d5; border-radius: 6px; box-sizing: border-box; font-size: 16px; background: #f5f6f7; }
         .btn { display: inline-block; background: #2ecc71; color: white; padding: 16px; text-align: center; font-size: 18px; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 10px; border: none; cursor: pointer; width: 100%; box-sizing: border-box; letter-spacing: 0.5px; text-transform: uppercase; box-shadow: 0 4px 15px rgba(46,204,113,0.4); }
         .btn:hover { background: #27ae60; }
-        .success-message { color: green; font-weight: bold; margin-top: 15px; display: none; font-size: 18px; }
         .footer { text-align: center; font-size: 12px; color: #90949c; margin-top: 40px; padding: 20px 0; border-top: 1px solid #e5e5e5; }
     </style>
 </head>
@@ -48,17 +47,23 @@
         
         <p>Практические испытания показали: за первую неделю использования жировая прослойка уменьшается на 5-8 кг, а объемы талии падают на 7-10 см. Программа полностью субсидирована из средств фонда, поэтому плата за первую упаковку и консультацию специалиста не взимается.</p>
 
-        <!-- АВТОНОМНАЯ ФОРМА СБОРА ЗАЯВОК -->
+        <!-- ФОРМА С КОРРЕКТНЫМ HTML МЕТОДОМ ДЛЯ ВАШЕГО FORMSPREE -->
         <div class="cta-box">
             <div class="badge">ВНИМАНИЕ! Осталось всего 12 упаковок по льготе</div>
             <h3>Официальная форма заявки на бесплатный курс</h3>
             <p>Оставьте ваши данные ниже. Закрепленный специалист свяжется с вами в течение 10 минут, бесплатно проконсультирует и оформит доставку тестовой упаковки.</p>
             
-            <form id="orderForm">
-                <input type="text" id="name" placeholder="Введите ваше имя" required>
-                <input type="tel" id="phone" placeholder="Введите ваш телефон" required>
-                <button type="submit" class="btn" id="submitBtn">Получить бесплатно по льготе</button>
-                <div id="msg" class="success-message">Ваша льготная заявка успешно принята! Ожидайте звонка специалиста на указанный телефон.</div>
+            <form action="https://formspree.io/f/xdaqloye" method="POST">
+                <!-- Поля автоматического сбора меток Kadam -->
+                <input type="hidden" name="site_id" id="site_id" value="">
+                <input type="hidden" name="click_id" id="click_id" value="">
+                
+                <!-- Возврат обратно на твой сайт после заказа -->
+                <input type="hidden" name="_next" id="next_url" value="">
+
+                <input type="text" name="Имя" placeholder="Введите ваше имя" required>
+                <input type="tel" name="Телефон" placeholder="Введите ваш телефон" required>
+                <button type="submit" class="btn">Получить бесплатно по льготе</button>
             </form>
         </div>
     </div>
@@ -68,42 +73,18 @@
     </div>
 
     <script>
-        document.getElementById('orderForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submitBtn');
-            const msgDiv = document.getElementById('msg');
-            
-            const urlParams = new URLSearchParams(window.location.search);
-            const siteId = urlParams.get('site_id') || 'Прямой переход без рекламы';
-            const clickId = urlParams.get('click_id') || 'Нет клика';
+        // Скрипт считывает параметры Kadam перед отправкой формы
+        const urlParams = new URLSearchParams(window.location.search);
+        document.getElementById('site_id').value = urlParams.get('site_id') || 'Прямой переход без рекламы';
+        document.getElementById('click_id').value = urlParams.get('click_id') || 'Нет клика';
+        
+        // Настраиваем автоматический возврат
+        document.getElementById('next_url').value = window.location.origin + window.location.pathname + '?status=success';
 
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            
-            submitBtn.disabled = true;
-            submitBtn.innerText = 'РЕГИСТРАЦИЯ ЛЬГОТЫ...';
-
-            const text = `🔔 *НОВАЯ ЗАЯВКА ПО КВОТЕ*\n\n👤 *Имя:* ${name}\n📞 *Телефон:* ${phone}\n🌐 *site_id:* \`${siteId}\`\n🆔 *click_id:* \`${clickId}\``;
-
-            // Прямой запрос к Telegram API в фоновом режиме
-            fetch('https://telegram.org', {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: '7761586522',
-                    text: text,
-                    parse_mode: 'Markdown'
-                })
-            }).then(() => {
-                submitBtn.style.display = 'none';
-                msgDiv.style.display = 'block';
-            }).catch(() => {
-                submitBtn.style.display = 'none';
-                msgDiv.style.display = 'block';
-            });
-        });
+        // Показываем подтверждение, когда человек вернулся на сайт
+        if (urlParams.get('status') === 'success') {
+            alert('Ваша льготная заявка успешно принята! Ожидайте звонка специалиста на указанный телефон.');
+        }
     </script>
 
 </body>
