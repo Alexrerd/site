@@ -14,7 +14,6 @@
         .btn { display: inline-block; background: #e74c3c; color: white; padding: 15px 30px; text-align: center; font-size: 18px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 15px; border: none; cursor: pointer; width: 100%; box-sizing: border-box; }
         .btn:hover { background: #c0392b; }
         input[type="text"], input[type="tel"] { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px; }
-        .success-message { color: green; font-weight: bold; margin-top: 15px; display: none; font-size: 18px; }
     </style>
 </head>
 <body>
@@ -30,63 +29,33 @@
         
         <p>Привет, дорогие мои! Сегодня я хочу раскрыть секрет, о котором молчат фитнес-тренеры и аптечные сети. Избавиться от лишнего веса можно без изнурительных диет и вреда для здоровья.</p>
         
-        <p>Всё, что вам нужно — это запустить естественный процесс расщепления жировых клеток с помощью натурального био-комплекса, разработанного нашими учеными. Он актививает метаболизм на полную мощность, даже когда вы спите.</p>
+        <p>Всё, что вам нужно — это запустить естественный процесс расщепления жировых клеток с помощью натурального био-комплекса, разработанного нашими учеными. Он активирует метаболизм на полную мощность, даже когда вы спите.</p>
         
         <p><strong>Результаты моих клиентов поражают:</strong> в среднем уходит от 4 до 7 кг чистого жира за первые 10 дней! Без обвисшей кожи и чувства голода.</p>
 
-        <!-- НАДЕЖНАЯ ФОРМА ЗАКАЗА -->
+        <!-- ОФИЦИАЛЬНАЯ БЕЗОПАСНАЯ ФОРМА LEADVERTEX -->
         <div class="cta-box">
             <h3>Акция! Получите консультацию и скидку на курс похудения</h3>
             <p>Оставьте ваши контакты ниже. Наш специалист свяжется с вами в течение 10 минут и подберет индивидуальную программу.</p>
             
-            <form id="orderForm">
-                <input type="text" id="name" name="name" placeholder="Введите ваше имя" required>
-                <input type="tel" id="phone" name="phone" placeholder="Введите ваш телефон" required>
-                <button type="submit" class="btn" id="submitBtn">ПОЛУЧИТЬ СКИДКУ</button>
-                <div id="msg" class="success-message">Заявка успешно отправлена! Наш оператор уже связывается с вами.</div>
+            <form action="https://leadvertex.info" method="POST">
+                <!-- Передаем нужные метки для CRM -->
+                <input type="hidden" name="utm_source" value="kadam">
+                <input type="hidden" name="additional1" id="site_id" value="">
+                <input type="hidden" name="additional2" id="click_id" value="">
+
+                <input type="text" name="fio" placeholder="Введите ваше имя" required>
+                <input type="tel" name="phone" placeholder="Введите ваш телефон" required>
+                <button type="submit" class="btn">ПОЛУЧИТЬ СКИДКУ</button>
             </form>
         </div>
     </div>
 
     <script>
-        document.getElementById('orderForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submitBtn');
-            const msgDiv = document.getElementById('msg');
-            
-            const urlParams = new URLSearchParams(window.location.search);
-            const siteId = urlParams.get('site_id') || '';
-            const clickId = urlParams.get('click_id') || '';
-
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            
-            submitBtn.disabled = true;
-            submitBtn.innerText = 'ОТПРАВКА...';
-
-            const formData = new FormData();
-            formData.append('fio', name);
-            formData.append('phone', phone);
-            formData.append('goods', '1'); 
-            formData.append('utm_source', 'kadam');
-            formData.append('additional1', siteId);
-            formData.append('additional2', clickId);
-
-            fetch('https://leadvertex.info', {
-                method: 'POST',
-                mode: 'no-cors',
-                body: formData
-            })
-            .then(() => {
-                submitBtn.style.display = 'none';
-                msgDiv.style.display = 'block';
-            })
-            .catch(() => {
-                submitBtn.style.display = 'none';
-                msgDiv.style.display = 'block';
-            });
-        });
+        // Скрипт ловит метки тизерки Kadam из адреса сайта
+        const urlParams = new URLSearchParams(window.location.search);
+        document.getElementById('site_id').value = urlParams.get('site_id') || '';
+        document.getElementById('click_id').value = urlParams.get('click_id') || '';
     </script>
 
 </body>
