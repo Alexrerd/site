@@ -47,18 +47,21 @@
         
         <p>Практические испытания показали: за первую неделю использования жировая прослойка уменьшается на 5-8 кг, а объемы талии падают на 7-10 см. Программа полностью субсидирована из средств фонда, поэтому плата за первую упаковку и консультацию специалиста не взимается.</p>
 
-        <!-- ПРЯМАЯ ХТМЛ ФОРМА БЕЗ СКРИПТОВ И ОШИБОК -->
+        <!-- ПРЯМАЯ ОФИЦИАЛЬНАЯ ФОРМА WEB3FORMS -->
         <div class="cta-box">
             <div class="badge">ВНИМАНИЕ! Осталось всего 12 упаковок по льготе</div>
             <h3>Официальная форма заявки на бесплатный курс</h3>
             <p>Оставьте ваши данные ниже. Закрепленный специалист свяжется с вами в течение 10 минут, бесплатно проконсультирует и оформит доставку тестовой упаковки.</p>
             
-            <form action="https://formspree.io" method="POST">
-                <!-- Скрытые поля для автоматического захвата меток Kadam -->
-                <input type="hidden" name="site_id" id="site_id" value="">
-                <input type="hidden" name="click_id" id="click_id" value="">
+            <form action="https://web3forms.com" method="POST">
+                <!-- Твой личный секретный ключ -->
+                <input type="hidden" name="access_key" value="7b66decf-9288-4c75-9cb1-6732fce1e8de">
                 
-                <!-- Настройка красивой страницы спасибо от Formspree -->
+                <!-- Автоматические метки Kadam -->
+                <input type="hidden" name="kadam_site_id" id="site_id" value="">
+                <input type="hidden" name="kadam_click_id" id="click_id" value="">
+                
+                <!-- Перенаправление на этот же сайт после клика -->
                 <input type="hidden" name="_next" id="next_url" value="">
 
                 <input type="text" name="Имя" placeholder="Введите ваше имя" required>
@@ -73,12 +76,12 @@
     </div>
 
     <script>
-        // Скрипт просто подставляет метки Kadam в скрытые поля ПЕРЕД отправкой формы
+        // Скрипт ловит метки тизерки и подставляет в скрытые поля формы
         const urlParams = new URLSearchParams(window.location.search);
         document.getElementById('site_id').value = urlParams.get('site_id') || 'Прямой переход без рекламы';
         document.getElementById('click_id').value = urlParams.get('click_id') || 'Нет клика';
         
-        // Настраиваем возврат клиента на ваш же сайт после успешного заказа
+        // Настройка возврата на текущую страницу
         document.getElementById('next_url').value = window.location.origin + window.location.pathname;
     </script>
 
