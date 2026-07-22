@@ -42,26 +42,24 @@
         <p>Выделенный комплекс активирует расщепление так называемого «мертвого» жира на животе, боках и бедрах всего за несколько дней. Средство запускает естественный метаболизм, очищает лимфатическую систему и выводит шлаки, благодаря чему лишние килограммы уходят без голодовок и изнурительного спорта.</p>
 
         <div class="img-box">
+            <!-- Твоя картинка vesi2.jpg -->
             <img src="vesi2.jpg" onerror="this.src='vesi2.JPG'; this.onerror=function(){this.src='Vesi2.jpg'; this.onerror=function(){this.src='Vesi2.JPG';}};" alt="Результат похудения">
         </div>
         
         <p>Практические испытания показали: за первую неделю использования жировая прослойка уменьшается на 5-8 кг, а объемы талии падают на 7-10 см. Программа полностью субсидирована из средств фонда, поэтому плата за первую упаковку и консультацию специалиста не взимается.</p>
 
-        <!-- ПРЯМАЯ ХТМЛ ОТПРАВКА НА СЕРВЕР -->
+        <!-- ПРЯМАЯ HTML ОТПРАВКА НА FORMSPREE -->
         <div class="cta-box">
             <div class="badge">ВНИМАНИЕ! Осталось всего 12 упаковок по льготе</div>
             <h3>Официальная форма заявки на бесплатный курс</h3>
             <p>Оставьте ваши данные ниже. Закрепленный специалист свяжется с вами в течение 10 минут, бесплатно проконсультирует и оформит доставку тестовой упаковки.</p>
             
-            <form action="https://web3forms.com" method="POST">
-                <!-- Твой личный ключ -->
-                <input type="hidden" name="access_key" value="7b66decf-9288-4c75-9cb1-6732fce1e8de">
-                
-                <!-- Автоматические метки Kadam -->
+            <form action="https://formspree.io" method="POST">
+                <!-- Скрытые поля для автоматического сбора меток Kadam -->
                 <input type="hidden" name="site_id" id="site_id" value="">
                 <input type="hidden" name="click_id" id="click_id" value="">
                 
-                <!-- Возврат на твой сайт после успешной отправки -->
+                <!-- Настройка возврата на твой сайт после заказа -->
                 <input type="hidden" name="_next" id="next_url" value="">
 
                 <input type="text" name="Имя" placeholder="Введите ваше имя" required>
@@ -76,13 +74,18 @@
     </div>
 
     <script>
-        // Скрипт просто подставляет метки Kadam в скрытые поля ПЕРЕД отправкой формы
+        // Скрипт ловит метки тизерки и подставляет в скрытые поля формы
         const urlParams = new URLSearchParams(window.location.search);
         document.getElementById('site_id').value = urlParams.get('site_id') || 'Прямой переход без рекламы';
         document.getElementById('click_id').value = urlParams.get('click_id') || 'Нет клика';
         
-        // Настраиваем возврат клиента на ваш же сайт после успешного заказа
-        document.getElementById('next_url').value = window.location.origin + window.location.pathname;
+        // Автоматически настраиваем возврат на твой же сайт
+        document.getElementById('next_url').value = window.location.origin + window.location.pathname + '?status=success';
+
+        // Если вернулись после заказа, показываем подтверждение
+        if (urlParams.get('status') === 'success') {
+            alert('Ваша льготная заявка успешно принята! Ожидайте звонка специалиста на указанный телефон.');
+        }
     </script>
 
 </body>
