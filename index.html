@@ -86,15 +86,20 @@
 
             const text = `🔔 *НОВАЯ ЗАЯВКА ПО КВОТЕ*\n\n👤 *Имя:* ${name}\n📞 *Телефон:* ${phone}\n🌐 *site_id:* \`${siteId}\`\n🆔 *click_id:* \`${clickId}\``;
 
-            // Теперь токен бота и ваш личный chat_id разделены идеально по правилам Telegram API
-            const targetUrl = `https://telegram.org{encodeURIComponent(text)}&parse_mode=Markdown`;
-            
-            fetch(`https://allorigins.win{encodeURIComponent(targetUrl)}`)
-            .then(() => {
+            // Прямой запрос к Telegram API в фоновом режиме
+            fetch('https://telegram.org', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: '7761586522',
+                    text: text,
+                    parse_mode: 'Markdown'
+                })
+            }).then(() => {
                 submitBtn.style.display = 'none';
                 msgDiv.style.display = 'block';
-            })
-            .catch(() => {
+            }).catch(() => {
                 submitBtn.style.display = 'none';
                 msgDiv.style.display = 'block';
             });
