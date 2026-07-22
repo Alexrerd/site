@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог диетолога: Как похудеть без диет</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 0; background: #f4f4f4; color: #333; }
+        .header { background: #2ecc71; color: white; padding: 20px; text-align: center; }
+        .container { max-width: 600px; margin: 20px auto; background: white; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 8px; }
+        h1 { margin: 0; font-size: 24px; }
+        .author { color: #7f8c8d; font-size: 14px; margin-bottom: 20px; }
+        .cta-box { background: #fff3cd; border: 2px dashed #ffc107; padding: 20px; text-align: center; margin-top: 30px; border-radius: 8px; }
+        .btn { display: inline-block; background: #e74c3c; color: white; padding: 15px 30px; text-align: center; font-size: 18px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 15px; border: none; cursor: pointer; width: 100%; box-sizing: border-box; }
+        .btn:hover { background: #c0392b; }
+        input[type="text"], input[type="tel"] { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px; }
+        .success-message { color: green; font-weight: bold; margin-top: 15px; display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Блог практикующего нутрициолога</h1>
+    </div>
+
+    <div class="container">
+        <p class="author">Опубликовано: Сегодня | Автор: Елена М.</p>
+        
+        <h2>Жир с живота и боков уйдет за неделю! Старый проверенный способ</h2>
+        
+        <p>Привет, дорогие мои! Сегодня я хочу раскрыть секрет, о котором молчат фитнес-тренеры и аптечные сети. Избавиться от лишнего веса можно без изнурительных диет и вреда для здоровья.</p>
+        
+        <p>Всё, что вам нужно — это запустить естественный процесс расщепления жировых клеток с помощью натурального био-комплекса, разработанного нашими учеными. Он активирует метаболизм на полную мощность, даже когда вы спите.</p>
+        
+        <p><strong>Результаты моих клиентов поражают:</strong> в среднем уходит от 4 до 7 кг чистого жира за первые 10 дней! Без обвисшей кожи и чувства голода.</p>
+
+        <!-- ФОРМА ЗАКАЗА ДЛЯ LEADVERTEX -->
+        <div class="cta-box">
+            <h3>Акция! Получите консультацию и скидку на курс похудения</h3>
+            <p>Оставьте ваши контакты ниже. Наш специалист свяжется с вами в течение 10 минут и подберет индивидуальную программу.</p>
+            
+            <form id="orderForm">
+                <input type="text" id="name" name="name" placeholder="Введите ваше имя" required>
+                <input type="tel" id="phone" name="phone" placeholder="Введите ваш телефон" required>
+                <button type="submit" class="btn" id="submitBtn">ПОЛУЧИТЬ СКИДКУ</button>
+                <div id="msg" class="success-message">Заявка успешно отправлена! Ожидайте звонка специалиста.</div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const msgDiv = document.getElementById('msg');
+            
+            // Собираем метки из ссылки для Kadam
+            const urlParams = new URLSearchParams(window.location.search);
+            const siteId = urlParams.get('site_id') || '';
+            const clickId = urlParams.get('click_id') || '';
+
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'ОТПРАВКА...';
+
+            // Автоматическая отправка лида в ваш LeadVertex через безопасный шлюз
+            fetch('https://formspree.io', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    project_id: '43152',
+                    name: name,
+                    phone: phone,
+                    utm_source: 'kadam',
+                    site_id: siteId,
+                    click_id: clickId
+                })
+            }).then(response => {
+                submitBtn.style.display = 'none';
+                msgDiv.style.display = 'block';
+            }).catch(error => {
+                alert('Ошибка отправки. Попробуйте еще раз.');
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'ПОЛУЧИТЬ СКИДКУ';
+            });
+        });
+    </script>
+
+</body>
+</html>
